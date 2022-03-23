@@ -1,11 +1,11 @@
-const { Card } = require("../models/cardModels");
+const { Card } = require('../models/cardModels');
 
 exports.getCards = async (req, res) => {
   try {
     const cards = await Card.find({});
     res.send(cards);
   } catch (err) {
-    return res.status(500).send({ message: "Ошибка чтения карточек." });
+    return res.status(500).send({ message: 'Ошибка чтения карточек.' });
   }
 };
 
@@ -15,14 +15,14 @@ exports.createCard = async (req, res) => {
     const { name, link } = req.body;
     const likes = [];
     const card = await Card.create({ name, link, owner, likes });
-    res.send(card);
+    return res.send(card);
   } catch (err) {
-    if (err.name === "ValidationError") {
+    if (err.name === 'ValidationError') {
       return res.status(400).send({
-        message: "Переданы некорректные данные при создании карточки",
+        message: 'Переданы некорректные данные при создании карточки',
       });
     } else {
-      return res.status(500).send({ message: "Ошибка чтения карточек." });
+      return res.status(500).send({ message: 'Ошибка чтения карточек.' });
     }
   }
 };
@@ -38,7 +38,7 @@ exports.deleteCard = async (req, res) => {
       });
     }
   } catch (err) {
-    return res.status(500).send({ message: "Ошибка чтения карточек." });
+    return res.status(500).send({ message: 'Ошибка чтения карточек.' });
   }
 };
 
@@ -53,16 +53,16 @@ exports.likeCard = async (req, res) => {
     );
     res.send(card);
   } catch (err) {
-    if (err.name === "ValidationError") {
+    if (err.name === 'ValidationError') {
       return res.status(400).send({
-        message: "Переданы некорректные данные для постановки/снятии лайка.",
+        message: 'Переданы некорректные данные для постановки/снятии лайка.',
       });
-    } else if (err.name === "CastError") {
+    } else if (err.name === 'CastError') {
       return res.status(404).send({
         message: `Передан несуществующий id: ${req.params.cardId} карточки.`,
       });
     } else {
-      return res.status(500).send({ message: "Ошибка чтения карточек." });
+      return res.status(500).send({ message: 'Ошибка чтения карточек.' });
     }
   }
 };
@@ -78,16 +78,16 @@ exports.dislikeCard = async (req, res) => {
     );
     res.send(card);
   } catch (err) {
-    if (err.name === "ValidationError") {
+    if (err.name === 'ValidationError') {
       return res.status(400).send({
-        message: "Переданы некорректные данные для постановки/снятии лайка.",
+        message: 'Переданы некорректные данные для постановки/снятии лайка.',
       });
-    } else if (err.name === "CastError") {
+    } else if (err.name === 'CastError') {
       return res.status(404).send({
         message: `Передан несуществующий id: ${req.params.cardId} карточки.`,
       });
     } else {
-      return res.status(500).send({ message: "Ошибка чтения карточек." });
+      return res.status(500).send({ message: 'Ошибка чтения карточек.' });
     }
   }
 };

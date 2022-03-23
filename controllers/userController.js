@@ -1,12 +1,12 @@
-const { User } = require("../models/userModels");
-const { usersRoutes } = require("../routes/usersRoutes");
+const { User } = require('../models/userModels');
+const { usersRoutes } = require('../routes/usersRoutes');
 
 exports.getUsers = async (req, res) => {
   try {
     const users = await User.find({});
     res.send(users);
   } catch (err) {
-    return res.status(500).send({ message: "Ошибка чтения пользователей." });
+    return res.status(500).send({ message: 'Ошибка чтения пользователей.' });
   }
 };
 
@@ -21,7 +21,7 @@ exports.getUserById = async (req, res) => {
       });
     }
   } catch (err) {
-    return res.status(500).send({ message: "Ошибка чтения пользователей." });
+    return res.status(500).send({ message: 'Ошибка чтения пользователей.' });
   }
 };
 
@@ -30,12 +30,12 @@ exports.createUser = async (req, res) => {
     const user = await User.create(req.body);
     res.send(user);
   } catch (err) {
-    if (err.name === "ValidationError") {
+    if (err.name === 'ValidationError') {
       return res.status(400).send({
-        message: "Переданы некорректные данные при создании пользователя.",
+        message: 'Переданы некорректные данные при создании пользователя.',
       });
     } else {
-      return res.status(500).send({ message: "Ошибка чтения пользователей." });
+      return res.status(500).send({ message: 'Ошибка чтения пользователей.' });
     }
   }
 };
@@ -43,23 +43,19 @@ exports.createUser = async (req, res) => {
 exports.updateUserProfile = async (req, res) => {
   try {
     const { name, about } = req.body;
-    const user = await User.findByIdAndUpdate(
-      req.user._id,
-      { name, about },
-      { new: true, runValidators: true }
-    );
+    const user = await User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true });
     res.send(user);
   } catch (err) {
-    if (err.name === "ValidationError") {
+    if (err.name === 'ValidationError') {
       return res.status(400).send({
-        message: "Переданы некорректные данные при обновлении профиля.",
+        message: 'Переданы некорректные данные при обновлении профиля.',
       });
-    } else if (err.name === "CastError") {
+    } else if (err.name === 'CastError') {
       return res.status(404).send({
         message: `Пользователь с указанным id:${req.user._id} не найден. `,
       });
     } else {
-      return res.status(500).send({ message: "Ошибка чтения пользователей." });
+      return res.status(500).send({ message: 'Ошибка чтения пользователей.' });
     }
   }
 };
@@ -77,16 +73,16 @@ exports.updateUserAvatar = async (req, res) => {
     );
     res.send(user);
   } catch (err) {
-    if (err.name === "ValidationError") {
+    if (err.name === 'ValidationError') {
       return res.status(400).send({
-        message: "Переданы некорректные данные при обновлении аватара.",
+        message: 'Переданы некорректные данные при обновлении аватара.',
       });
-    } else if (err.name === "CastError") {
+    } else if (err.name === 'CastError') {
       return res.status(404).send({
         message: `Пользователь с указанным id:${req.user._id} не найден. `,
       });
     } else {
-      return res.status(500).send({ message: "Ошибка чтения пользователей." });
+      return res.status(500).send({ message: 'Ошибка чтения пользователей.' });
     }
   }
 };
