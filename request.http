@@ -22,7 +22,7 @@ PATCH http://localhost:3000/users/me
 Content-Type: application/json
 
 {
-  "name": "Alexander developer",
+  "name": "Alexander Bakay",
   "about": "long story test updated twice"
 }
 
