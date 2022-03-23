@@ -57,5 +57,5 @@ PUT http://localhost:3000/cards/623982e56773aacc138acddf/likes
 
 //Убрать лайк с карточки
 ###
-DELETE  http://localhost:3000/cards/623982e56773aacc138acdd/likes
+DELETE  http://localhost:3000/cards/623982e56773aacc138acddf/likes
 

@@ -22,6 +22,9 @@ app.use((req, res, next) => {
 });
 
 app.use(routes);
+app.use((req, res) => {
+  res.status(404).send({ message: 'Запрос на несуществующий маршрут' });
+});
 
 async function main() {
   try {

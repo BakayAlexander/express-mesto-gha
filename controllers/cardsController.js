@@ -5,7 +5,7 @@ exports.getCards = async (req, res) => {
     const cards = await Card.find({});
     res.send(cards);
   } catch (err) {
-    return res.status(500).send({ message: 'Ошибка чтения карточек.' });
+    res.status(500).send({ message: 'На сервере произошла ошибка.' });
   }
 };
 
@@ -15,14 +15,14 @@ exports.createCard = async (req, res) => {
     const { name, link } = req.body;
     const likes = [];
     const card = await Card.create({ name, link, owner, likes });
-    return res.send(card);
+    res.send(card);
   } catch (err) {
     if (err.name === 'ValidationError') {
-      return res.status(400).send({
+      res.status(400).send({
         message: 'Переданы некорректные данные при создании карточки',
       });
     } else {
-      return res.status(500).send({ message: 'Ошибка чтения карточек.' });
+      res.status(500).send({ message: 'На сервере произошла ошибка.' });
     }
   }
 };
@@ -33,12 +33,12 @@ exports.deleteCard = async (req, res) => {
     if (card) {
       res.send(card);
     } else {
-      return res.status(404).send({
+      res.status(404).send({
         message: `Карточка по указанному id:${req.params.cardId} не найдена`,
       });
     }
   } catch (err) {
-    return res.status(500).send({ message: 'Ошибка чтения карточек.' });
+    res.status(400).send({ message: 'На сервере произошла ошибка.' });
   }
 };
 
@@ -51,19 +51,22 @@ exports.likeCard = async (req, res) => {
       },
       { new: true }
     );
-    res.send(card);
-  } catch (err) {
-    if (err.name === 'ValidationError') {
-      return res.status(400).send({
-        message: 'Переданы некорректные данные для постановки/снятии лайка.',
+    if (card) {
+      res.send(card);
+    } else {
+      res.status(404).send({
+        message: 'Переданы некорректные данные для постановки лайка.',
       });
-    } else if (err.name === 'CastError') {
-      return res.status(404).send({
+    }
+  } catch (err) {
+    if (err.name === 'CastError') {
+      res.status(400).send({
         message: `Передан несуществующий id: ${req.params.cardId} карточки.`,
       });
     } else {
-      return res.status(500).send({ message: 'Ошибка чтения карточек.' });
+      res.status(500).send({ message: 'На сервере произошла ошибка.' });
     }
+    console.log(err.name);
   }
 };
 
@@ -76,18 +79,21 @@ exports.dislikeCard = async (req, res) => {
       },
       { new: true }
     );
-    res.send(card);
-  } catch (err) {
-    if (err.name === 'ValidationError') {
-      return res.status(400).send({
-        message: 'Переданы некорректные данные для постановки/снятии лайка.',
+    if (card) {
+      res.send(card);
+    } else {
+      res.status(404).send({
+        message: 'Переданы некорректные данные для снятия лайка.',
       });
-    } else if (err.name === 'CastError') {
-      return res.status(404).send({
+    }
+  } catch (err) {
+    if (err.name === 'CastError') {
+      res.status(400).send({
         message: `Передан несуществующий id: ${req.params.cardId} карточки.`,
       });
     } else {
-      return res.status(500).send({ message: 'Ошибка чтения карточек.' });
+      res.status(500).send({ message: 'На сервере произошла ошибка.' });
     }
+    console.log(err.name);
   }
 };
