@@ -1,0 +1,61 @@
+// Достать всех пользователей
+GET http://localhost:3000/users
+
+//Достать конкретного пользователя
+###
+GET http://localhost:3000/users/62384cf6ca7a52f769d35e5e
+
+//Добавить нового пользователя
+###
+POST http://localhost:3000/users
+Content-Type: application/json
+
+{
+  "name": "User test",
+  "about": "long story test",
+  "avatar": "some links"
+}
+
+//Обновить информацию о пользователе
+###
+PATCH http://localhost:3000/users/me
+Content-Type: application/json
+
+{
+  "name": "Alexander developer",
+  "about": "long story test updated"
+}
+
+//Обновить аватарку пользователя
+###
+PATCH http://localhost:3000/users/me/avatar
+Content-Type: application/json
+
+{"avatar": "test avatar"}
+
+//Достать все карточки
+###
+GET http://localhost:3000/cards
+
+//Добавить новую карточку
+###
+POST http://localhost:3000/cards
+Content-Type: application/json
+
+{
+  "name": "One more test",
+  "link": "test card link"
+}
+
+//Удалить конкретную карточку
+###
+DELETE http://localhost:3000/cards/623893d2f20587024cd514d3
+
+//Поставить лайк на карточку
+###
+PUT http://localhost:3000/cards/623982e56773aacc138acddf/likes
+
+//Убрать лайк с карточки
+###
+DELETE  http://localhost:3000/cards/623982e56773aacc138acdd/likes
+
