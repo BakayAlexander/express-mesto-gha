@@ -31,7 +31,6 @@ app.use((req, res) => {
 
 async function main() {
   try {
-    console.log('Starting connect to db');
     await mongoose.connect('mongodb://localhost:27017/mestodb');
   } catch (err) {
     console.log(err);

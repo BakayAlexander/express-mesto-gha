@@ -13,12 +13,10 @@ exports.createCard = async (req, res) => {
   try {
     const owner = req.user._id;
     const { name, link } = req.body;
-    const likes = [];
     const card = await Card.create({
       name,
       link,
       owner,
-      likes,
     });
     res.send(card);
   } catch (err) {
@@ -43,7 +41,11 @@ exports.deleteCard = async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(400).send({ message: 'На сервере произошла ошибка.' });
+    if (err.name === 'CastError') {
+      res.status(400).send({ message: 'Невалидный id' });
+    } else {
+      res.status(500).send({ message: 'На сервере произошла ошибка.' });
+    }
   }
 };
 
@@ -71,7 +73,6 @@ exports.likeCard = async (req, res) => {
     } else {
       res.status(500).send({ message: 'На сервере произошла ошибка.' });
     }
-    console.log(err.name);
   }
 };
 
@@ -99,6 +100,5 @@ exports.dislikeCard = async (req, res) => {
     } else {
       res.status(500).send({ message: 'На сервере произошла ошибка.' });
     }
-    console.log(err.name);
   }
 };

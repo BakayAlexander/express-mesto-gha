@@ -20,7 +20,11 @@ exports.getUserById = async (req, res) => {
       });
     }
   } catch (err) {
-    res.status(400).send({ message: 'На сервере произошла ошибка.' });
+    if (err.name === 'CastError') {
+      res.status(400).send({ message: 'Невалидный id' });
+    } else {
+      res.status(500).send({ message: 'На сервере произошла ошибка.' });
+    }
   }
 };
 
@@ -47,15 +51,17 @@ exports.updateUserProfile = async (req, res) => {
       { name, about },
       { new: true, runValidators: true },
     );
-    res.send(user);
-  } catch (err) {
-    if (err.name === 'ValidationError') {
-      res.status(400).send({
-        message: 'Переданы некорректные данные при обновлении профиля.',
-      });
-    } else if (err.name === 'CastError') {
+    if (user) {
+      res.send(user);
+    } else {
       res.status(404).send({
-        message: `Пользователь с указанным id:${req.user._id} не найден. `,
+        message: `Пользователь по указанному id:${req.params.userId} не найден.`,
+      });
+    }
+  } catch (err) {
+    if (err.name === 'CastError') {
+      res.status(400).send({
+        message: 'Невалидный id',
       });
     } else {
       res.status(500).send({ message: 'На сервере произошла ошибка.' });
@@ -74,15 +80,17 @@ exports.updateUserAvatar = async (req, res) => {
         runValidators: true,
       },
     );
-    res.send(user);
-  } catch (err) {
-    if (err.name === 'ValidationError') {
-      res.status(400).send({
-        message: 'Переданы некорректные данные при обновлении аватара.',
-      });
-    } else if (err.name === 'CastError') {
+    if (user) {
+      res.send(user);
+    } else {
       res.status(404).send({
-        message: `Пользователь с указанным id:${req.user._id} не найден. `,
+        message: `Пользователь по указанному id:${req.params.userId} не найден`,
+      });
+    }
+  } catch (err) {
+    if (err.name === 'CastError') {
+      res.status(400).send({
+        message: 'Невалидный id',
       });
     } else {
       res.status(500).send({ message: 'На сервере произошла ошибка.' });

@@ -23,7 +23,7 @@ Content-Type: application/json
 
 {
   "name": "Alexander developer",
-  "about": "long story test updated"
+  "about": "long story test updated twice"
 }
 
 //Обновить аватарку пользователя
@@ -43,7 +43,7 @@ POST http://localhost:3000/cards
 Content-Type: application/json
 
 {
-  "name": "One more test",
+  "name": "One more test card",
   "link": "test card link"
 }
 
