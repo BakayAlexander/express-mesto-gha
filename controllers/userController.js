@@ -42,7 +42,11 @@ exports.createUser = async (req, res) => {
 exports.updateUserProfile = async (req, res) => {
   try {
     const { name, about } = req.body;
-    const user = await User.findByIdAndUpdate(req.user._id, { name, about }, { new: true, runValidators: true });
+    const user = await User.findByIdAndUpdate(
+      req.user._id,
+      { name, about },
+      { new: true, runValidators: true },
+    );
     res.send(user);
   } catch (err) {
     if (err.name === 'ValidationError') {
@@ -68,7 +72,7 @@ exports.updateUserAvatar = async (req, res) => {
       {
         new: true,
         runValidators: true,
-      }
+      },
     );
     res.send(user);
   } catch (err) {

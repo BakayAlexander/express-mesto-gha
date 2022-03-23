@@ -12,8 +12,8 @@ const cardSchema = mongoose.Schema({
     required: true,
   },
   owner: {
-    type: mongoose.Types.ObjectId, //Тип данных для monggose
-    ref: 'user', //очень важно указать ссылку и проверить, что она ведет именно туда куда надо
+    type: mongoose.Types.ObjectId, // Тип данных для monggose
+    ref: 'user', // очень важно указать ссылку и проверить, что она ведет именно туда куда надо
     required: true,
   },
   likes: [

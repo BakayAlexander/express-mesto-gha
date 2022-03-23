@@ -14,7 +14,12 @@ exports.createCard = async (req, res) => {
     const owner = req.user._id;
     const { name, link } = req.body;
     const likes = [];
-    const card = await Card.create({ name, link, owner, likes });
+    const card = await Card.create({
+      name,
+      link,
+      owner,
+      likes,
+    });
     res.send(card);
   } catch (err) {
     if (err.name === 'ValidationError') {
@@ -47,9 +52,9 @@ exports.likeCard = async (req, res) => {
     const card = await Card.findByIdAndUpdate(
       req.params.cardId,
       {
-        $addToSet: { likes: req.user._id }, //добавить лайк если его еще нет
+        $addToSet: { likes: req.user._id }, // добавить лайк если его еще нет
       },
-      { new: true }
+      { new: true },
     );
     if (card) {
       res.send(card);
@@ -75,9 +80,9 @@ exports.dislikeCard = async (req, res) => {
     const card = await Card.findByIdAndUpdate(
       req.params.cardId,
       {
-        $pull: { likes: req.user._id }, //убрать лайк он есть
+        $pull: { likes: req.user._id }, // убрать лайк он есть
       },
-      { new: true }
+      { new: true },
     );
     if (card) {
       res.send(card);
