@@ -55,7 +55,7 @@ exports.updateUserProfile = async (req, res) => {
       res.send(user);
     } else {
       res.status(404).send({
-        message: `Пользователь по указанному id:${req.params.userId} не найден.`,
+        message: `Пользователь по указанному id:${req.user._id} не найден.`,
       });
     }
   } catch (err) {
@@ -84,7 +84,7 @@ exports.updateUserAvatar = async (req, res) => {
       res.send(user);
     } else {
       res.status(404).send({
-        message: `Пользователь по указанному id:${req.params.userId} не найден`,
+        message: `Пользователь по указанному id:${req.user._id} не найден`,
       });
     }
   } catch (err) {
@@ -92,6 +92,8 @@ exports.updateUserAvatar = async (req, res) => {
       res.status(400).send({
         message: 'Невалидный id',
       });
+    } else if (err.name === 'ValidationError') {
+      res.status(400).send({ message: 'Данные невалидны' });
     } else {
       res.status(500).send({ message: 'На сервере произошла ошибка.' });
     }

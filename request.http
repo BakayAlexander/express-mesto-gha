@@ -31,7 +31,7 @@ Content-Type: application/json
 PATCH http://localhost:3000/users/me/avatar
 Content-Type: application/json
 
-{"avatar": "test avatar"}
+{"avatar": "Test avatar"}
 
 //Достать все карточки
 ###
