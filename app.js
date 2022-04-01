@@ -4,7 +4,11 @@ const bodyParser = require('body-parser');
 
 const mongoose = require('mongoose');
 
+const { errors } = require('celebrate');
+
 const { routes } = require('./routes/app');
+const errorHandler = require('./middlewares/errorHandler');
+const NotFoundError = require('./erros/NotFoundError');
 
 const app = express();
 const { PORT = 3000 } = process.env;
@@ -13,21 +17,16 @@ app.use(bodyParser.json()); // сборка json-формата
 app.use(bodyParser.urlencoded({ extended: true })); // прием web-страниц
 
 app.use((req, res, next) => {
-  req.user = {
-    _id: '62384cf6ca7a52f769d35e5e', // вставьте сюда _id созданного в предыдущем пункте пользователя
-  };
-  next();
-});
-
-app.use((req, res, next) => {
   console.log(req.method, req.path);
   next();
 });
 
 app.use(routes);
-app.use((req, res) => {
-  res.status(404).send({ message: 'Запрос на несуществующий маршрут' });
+app.use((req, res, next) => {
+  next(new NotFoundError('Запрашиваемый ресур не найден'));
 });
+app.use(errors());
+app.use(errorHandler);
 
 async function main() {
   try {

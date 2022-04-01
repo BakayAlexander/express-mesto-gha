@@ -1,28 +1,44 @@
-// Достать всех пользователей
-GET http://localhost:3000/users
-
-//Достать конкретного пользователя
-###
-GET http://localhost:3000/users/62384cf6ca7a52f769d35e5e
-
-//Добавить нового пользователя
-###
-POST http://localhost:3000/users
+//Регистрация нового пользователя
+POST http://localhost:3000/signup
 Content-Type: application/json
 
 {
-  "name": "User test",
-  "about": "long story test",
-  "avatar": "some links"
+  "email": "testingsigninl@mail.ru",
+  "password": "asadasfaaf",
+  "name": "Жан"
+  }
+####
+//Аутентификация пользователя
+POST http://localhost:3000/signin
+Content-Type: application/json
+
+{
+  "email": "testingsignin@mail.com",
+  "password": "additionalpassword"
 }
+###
+
+// Достать всех пользователей
+GET http://localhost:3000/users
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
+
+
+//Достать конкретного пользователя
+###
+GET http://localhost:3000/users/me
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
+
 
 //Обновить информацию о пользователе
 ###
 PATCH http://localhost:3000/users/me
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 
 {
-  "name": "Alexander Bakay",
+  "name": "Alex",
   "about": "long story test updated twice"
 }
 
@@ -30,17 +46,21 @@ Content-Type: application/json
 ###
 PATCH http://localhost:3000/users/me/avatar
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 
-{"avatar": "Test avatar"}
+{"avatar": "Test avatar 3"}
 
 //Достать все карточки
 ###
 GET http://localhost:3000/cards
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 
 //Добавить новую карточку
 ###
 POST http://localhost:3000/cards
 Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 
 {
   "name": "One more test card",
@@ -49,13 +69,19 @@ Content-Type: application/json
 
 //Удалить конкретную карточку
 ###
-DELETE http://localhost:3000/cards/623893d2f20587024cd514d3
+DELETE http://localhost:3000/cards/6245a1cf192d12a8dac56ba8
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 
 //Поставить лайк на карточку
 ###
 PUT http://localhost:3000/cards/623982e56773aacc138acddf/likes
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 
 //Убрать лайк с карточки
 ###
 DELETE  http://localhost:3000/cards/623982e56773aacc138acddf/likes
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 

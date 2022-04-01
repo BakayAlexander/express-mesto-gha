@@ -1,15 +1,18 @@
 const { Card } = require('../models/cardModels');
+const ValidationError = require('../erros/ValidationError');
+const NotFoundError = require('../erros/NotFoundError');
+const ConflictError = require('../erros/ConflictError');
 
-exports.getCards = async (req, res) => {
+exports.getCards = async (req, res, next) => {
   try {
     const cards = await Card.find({});
-    res.send(cards);
+    return res.send(cards);
   } catch (err) {
-    res.status(500).send({ message: 'На сервере произошла ошибка.' });
+    return next(err);
   }
 };
 
-exports.createCard = async (req, res) => {
+exports.createCard = async (req, res, next) => {
   try {
     const owner = req.user._id;
     const { name, link } = req.body;
@@ -18,87 +21,76 @@ exports.createCard = async (req, res) => {
       link,
       owner,
     });
-    res.send(card);
+    return res.send(card);
   } catch (err) {
     if (err.name === 'ValidationError') {
-      res.status(400).send({
-        message: 'Переданы некорректные данные при создании карточки',
-      });
-    } else {
-      res.status(500).send({ message: 'На сервере произошла ошибка.' });
+      next(new ValidationError('Введены некорректные данные'));
     }
+    return next(err);
   }
 };
 
-exports.deleteCard = async (req, res) => {
+exports.deleteCard = async (req, res, next) => {
   try {
-    const card = await Card.findByIdAndRemove(req.params.cardId);
-    if (card) {
-      res.send(card);
-    } else {
-      res.status(404).send({
-        message: `Карточка по указанному id:${req.params.cardId} не найдена`,
-      });
+    const userId = req.user._id;
+    const card = await Card.findById(req.params.cardId);
+    if (!card) {
+      return next(new NotFoundError('Карточка с указанным id не найдена'));
     }
+    const cardOwner = card.owner;
+    if (userId.toString() === cardOwner.toString()) {
+      const deleteCard = await Card.findByIdAndRemove(req.params.cardId);
+      return res.send(deleteCard);
+    }
+    return next(new ConflictError('Вы не можете этого сделать'));
   } catch (err) {
     if (err.name === 'CastError') {
-      res.status(400).send({ message: 'Невалидный id' });
-    } else {
-      res.status(500).send({ message: 'На сервере произошла ошибка.' });
+      return next(new ValidationError('Данные не валидны'));
     }
+    return next(err);
   }
 };
 
-exports.likeCard = async (req, res) => {
+exports.likeCard = async (req, res, next) => {
   try {
+    const userId = req.user._id;
     const card = await Card.findByIdAndUpdate(
       req.params.cardId,
       {
-        $addToSet: { likes: req.user._id }, // добавить лайк если его еще нет
+        $addToSet: { likes: userId }, // добавить лайк если его еще нет
       },
       { new: true },
     );
     if (card) {
-      res.send(card);
-    } else {
-      res.status(404).send({
-        message: 'Переданы некорректные данные для постановки лайка.',
-      });
+      return res.send(card);
     }
+    return next(new NotFoundError('Карточка с указанным id не найдена'));
   } catch (err) {
     if (err.name === 'CastError') {
-      res.status(400).send({
-        message: `Передан несуществующий id: ${req.params.cardId} карточки.`,
-      });
-    } else {
-      res.status(500).send({ message: 'На сервере произошла ошибка.' });
+      return next(new ValidationError('Данные не валидны'));
     }
+    return next(err);
   }
 };
 
-exports.dislikeCard = async (req, res) => {
+exports.dislikeCard = async (req, res, next) => {
   try {
+    const userId = req.user._id;
     const card = await Card.findByIdAndUpdate(
       req.params.cardId,
       {
-        $pull: { likes: req.user._id }, // убрать лайк он есть
+        $pull: { likes: userId }, // убрать лайк он есть
       },
       { new: true },
     );
     if (card) {
-      res.send(card);
-    } else {
-      res.status(404).send({
-        message: 'Переданы некорректные данные для снятия лайка.',
-      });
+      return res.send(card);
     }
+    return next(new NotFoundError('Карточка с указанным id не найдена'));
   } catch (err) {
     if (err.name === 'CastError') {
-      res.status(400).send({
-        message: `Передан несуществующий id: ${req.params.cardId} карточки.`,
-      });
-    } else {
-      res.status(500).send({ message: 'На сервере произошла ошибка.' });
+      return next(new ValidationError('Данные не валидны'));
     }
+    return next(err);
   }
 };

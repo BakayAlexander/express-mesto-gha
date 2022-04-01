@@ -1,8 +1,8 @@
 const express = require('express');
+
 const {
   getUsers,
   getUserById,
-  createUser,
   updateUserProfile,
   updateUserAvatar,
 } = require('../controllers/userController');
@@ -10,9 +10,7 @@ const {
 const usersRoutes = express.Router();
 
 usersRoutes.get('/', getUsers);
-usersRoutes.get('/:userId', getUserById);
-// в post запросе можно использовать промежуточное express.json()
-usersRoutes.post('/', createUser);
+usersRoutes.get('/me', getUserById);
 usersRoutes.patch('/me', updateUserProfile);
 usersRoutes.patch('/me/avatar', updateUserAvatar);
 
