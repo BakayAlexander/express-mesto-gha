@@ -3,6 +3,5 @@
   "rules": {
     "no-underscore-dangle": ["error", { "allow": ["_id"] }],
     "no-unused-vars": "error"
-    // "linebreak-style": true
   }
 }
