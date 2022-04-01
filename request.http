@@ -5,7 +5,7 @@ Content-Type: application/json
 {
   "email": "testingsigninl@mail.ru",
   "password": "asadasfaaf",
-  "name": "Жан"
+  "name": "Жdas"
   }
 ####
 //Аутентификация пользователя
@@ -24,9 +24,15 @@ Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 
 
-//Достать конкретного пользователя
+//Достать собственный профиль
 ###
 GET http://localhost:3000/users/me
+Content-Type: application/json
+Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
+
+//Достать конкретного пользователя
+###
+GET http://localhost:3000/users/62388ee6e8d3fe86d710d283
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 
@@ -48,7 +54,7 @@ PATCH http://localhost:3000/users/me/avatar
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 
-{"avatar": "Test avatar 3"}
+{"avatar": "https://sdss.ru"}
 
 //Достать все карточки
 ###
@@ -63,13 +69,13 @@ Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 
 {
-  "name": "One more test card",
-  "link": "test card link"
+  "name": "One m",
+  "link": "https://sds.ru"
 }
 
 //Удалить конкретную карточку
 ###
-DELETE http://localhost:3000/cards/6245a1cf192d12a8dac56ba8
+DELETE http://localhost:3000/cards/62441ff871921e4cc297b4c7
 Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 

@@ -16,21 +16,15 @@ exports.createCard = async (req, res, next) => {
   try {
     const owner = req.user._id;
     const { name, link } = req.body;
-    const card = await Card.create(
-      {
-        name,
-        link,
-        owner,
-      },
-      {
-        new: true,
-        runValidators: true,
-      },
-    );
+    const card = await Card.create({
+      name,
+      link,
+      owner,
+    });
     return res.send(card);
   } catch (err) {
     if (err.name === 'ValidationError') {
-      next(new ValidationError('Введены некорректные данные'));
+      return next(new ValidationError('Введены некорректные данные'));
     }
     return next(err);
   }
