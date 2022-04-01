@@ -16,11 +16,17 @@ exports.createCard = async (req, res, next) => {
   try {
     const owner = req.user._id;
     const { name, link } = req.body;
-    const card = await Card.create({
-      name,
-      link,
-      owner,
-    });
+    const card = await Card.create(
+      {
+        name,
+        link,
+        owner,
+      },
+      {
+        new: true,
+        runValidators: true,
+      },
+    );
     return res.send(card);
   } catch (err) {
     if (err.name === 'ValidationError') {
