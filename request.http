@@ -69,8 +69,8 @@ Content-Type: application/json
 Authorization: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiI2MjQ0MWZmODcxOTIxZTRjYzI5N2I0YzciLCJpYXQiOjE2NDg3MjY2NjUsImV4cCI6MTY0OTMzMTQ2NX0.K0MugFqrAxBsX0D11IZTiEY5h4U3BzFlczyihlq2pKA
 
 {
-  "name": "One m",
-  "link": "https://sds.ru"
+  "name": "Onem",
+  "link": "https://sdss.ru"
 }
 
 //Удалить конкретную карточку

@@ -49,7 +49,7 @@ exports.createUser = async (req, res, next) => {
     return res.send(userWithoutPassword);
   } catch (err) {
     if (err.name === 'ValidationError') {
-      next(new ValidationError('Введены некорректные данные'));
+      return next(new ValidationError('Введены некорректные данные'));
     }
     return next(err);
   }
@@ -80,12 +80,12 @@ exports.getUserById = async (req, res, next) => {
   try {
     const user = await User.findById(req.params.userId);
     if (user) {
-      res.send(user);
+      return res.send(user);
     }
     return next(new NotFoundError('Пользователь не найден'));
   } catch (err) {
     if (err.name === 'CastError') {
-      next(new ValidationError('Введены некорректные данные'));
+      return next(new ValidationError('Введены некорректные данные'));
     }
     return next(err);
   }
@@ -102,10 +102,10 @@ exports.updateUserProfile = async (req, res, next) => {
     if (result) {
       return res.send(result);
     }
-    return next(new UnathoriazedError('Нет прав доступа'));
+    return next(new NotFoundError('Пользователь не найден'));
   } catch (err) {
     if (err.name === 'ValidationError') {
-      next(new ValidationError('Введены некорректные данные'));
+      return next(new ValidationError('Введены некорректные данные'));
     }
     return next(err);
   }
@@ -128,7 +128,7 @@ exports.updateUserAvatar = async (req, res, next) => {
     return next(new NotFoundError('Пользователь не найден'));
   } catch (err) {
     if (err.name === 'ValidationError') {
-      next(new ValidationError('Введены некорректные данные'));
+      return next(new ValidationError('Введены некорректные данные'));
     }
     return next(err);
   }

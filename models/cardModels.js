@@ -11,6 +11,9 @@ const cardSchema = mongoose.Schema({
   link: {
     type: String,
     required: true,
+    validate: {
+      validator: regEx,
+    },
   },
   owner: {
     type: mongoose.Types.ObjectId, // Тип данных для monggose
